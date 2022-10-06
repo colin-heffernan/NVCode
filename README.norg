@@ -1,0 +1,18 @@
+@document.meta
+	title: README
+	description: NVCode's README
+	authors: Colin Heffernan
+	categories: 
+	created: 2022-09-25
+	updated: 2022-10-06
+	version: 0.0.14
+@end
+
+* NVCode
+  NVCode is my personal Neovim configuration. It is typically in the form of a Nix Flake, but this version will work anywhere Neovim works, probably. I haven't tested.
+
+* Installation
+  Simply copy the .config/nvim folder into your .config/nvim folder.
+
+* License
+  NVCode Non-Flake is licensed under the MIT License.
