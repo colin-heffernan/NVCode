@@ -13,6 +13,7 @@ configs.setup {
 		"html",
 		"javascript",
 		"json",
+		"latex",
 		"lua",
 		"nix",
 		"norg",

@@ -67,13 +67,14 @@ return packer.startup(function(use)
 	use { "hrsh7th/cmp-path" }
 	use { "hrsh7th/cmp-buffer" }
 	use { "hrsh7th/cmp-cmdline" }
-	use { "folke/noice.nvim" }
+	-- use { "folke/noice.nvim" }
 
 	-- Opt
 	use { "neovim/nvim-lspconfig", event = { "BufRead", "BufNewFile" } }
 	use { "jose-elias-alvarez/null-ls.nvim", after = "nvim-lspconfig" }
 	use { "b0o/SchemaStore.nvim", after = "null-ls.nvim", config = function() require("nvcode.lsp") end }
 	use { "folke/trouble.nvim", after = "SchemaStore.nvim", config = function() require("nvcode.trouble") end }
+	use { "glepnir/lspsaga.nvim", after = "trouble.nvim", config = function() require("nvcode.lspsaga") end }
 	use { "mfussenegger/nvim-dap", event = { "BufRead", "BufNewFile" } }
 	use { "rcarriga/nvim-dap-ui", after = "nvim-dap", config = function() require("nvcode.dap") end }
 	use { "lukas-reineke/indent-blankline.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.indentblankline") end }
