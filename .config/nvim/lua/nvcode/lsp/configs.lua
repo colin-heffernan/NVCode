@@ -5,16 +5,23 @@ if not status_ok then
 end
 
 local servers = {
-	"clangd",
+	"bashls",
 	"cssls",
+	"dockerls",
+	"eslint",
+	"graphql",
+	"hls",
 	"html",
 	"jsonls",
+	"lua_ls",
+	"marksman",
 	"pyright",
+	"rnix",
 	"rust_analyzer",
-	"sumneko_lua",
 	"svelte",
 	"texlab",
-	"tsserver"
+	"tsserver",
+	"vimls"
 }
 
 for _, server in pairs(servers) do
@@ -22,9 +29,9 @@ for _, server in pairs(servers) do
 		on_attach = require("nvcode.lsp.handlers").on_attach,
 		capabilities = require("nvcode.lsp.handlers").capabilities,
 	}
-	local has_custom_opts, server_custom_opts = pcall(require, "nvcode.lsp.settings" .. server)
+	local has_custom_opts, server_custom_opts = pcall(require, "nvcode.lsp.settings." .. server)
 	if has_custom_opts then
-		opts = vim.tbl_deep_extend("force", server_custom_opts, opts)
+		opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
 	end
 	lspconfig[server].setup(opts)
 end

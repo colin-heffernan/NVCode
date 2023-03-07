@@ -42,23 +42,23 @@ packer.init {
 return packer.startup(function(use)
 	-- Start
 	use { "wbthomason/packer.nvim" }
-	use { "lewis6991/impatient.nvim" }
+	--[[ use { "lewis6991/impatient.nvim" } ]]
 	use { "nvim-lua/plenary.nvim" }
 	use { "MunifTanjim/nui.nvim" }
 	use { "nvim-lua/popup.nvim" }
 	use { "rcarriga/nvim-notify" }
-	use { "anuvyklack/hydra.nvim" }
+	--[[ use { "anuvyklack/hydra.nvim" } ]]
 	use { "kyazdani42/nvim-web-devicons" }
 	use { "folke/tokyonight.nvim" }
 	use { "nvim-lualine/lualine.nvim" }
-	use { "noib3/nvim-cokeline" }
+	use { "akinsho/bufferline.nvim" }
+	--[[ use { "noib3/nvim-cokeline" } ]]
 	use { "goolord/alpha-nvim" }
 	use { "nvim-neo-tree/neo-tree.nvim", branch = "v2.x" }
 	use { "nvim-telescope/telescope.nvim" }
-	use { "ahmedkhalf/project.nvim" }
+	--[[ use { "ahmedkhalf/project.nvim" } ]]
 	use { "nvim-treesitter/nvim-treesitter" }
-	use { "nvim-treesitter/nvim-treesitter-textobjects" }
-	use { "windwp/nvim-autopairs" }
+	--[[ use { "nvim-treesitter/nvim-treesitter-textobjects" } ]]
 	use { "windwp/nvim-ts-autotag" }
 	use { "JoosepAlviste/nvim-ts-context-commentstring" }
 	use { "uga-rosa/ccc.nvim" }
@@ -67,29 +67,31 @@ return packer.startup(function(use)
 	use { "hrsh7th/cmp-path" }
 	use { "hrsh7th/cmp-buffer" }
 	use { "hrsh7th/cmp-cmdline" }
-	-- use { "folke/noice.nvim" }
+	use { "folke/noice.nvim" }
 
 	-- Opt
 	use { "neovim/nvim-lspconfig", event = { "BufRead", "BufNewFile" } }
-	use { "jose-elias-alvarez/null-ls.nvim", after = "nvim-lspconfig" }
-	use { "b0o/SchemaStore.nvim", after = "null-ls.nvim", config = function() require("nvcode.lsp") end }
-	use { "folke/trouble.nvim", after = "SchemaStore.nvim", config = function() require("nvcode.trouble") end }
-	use { "glepnir/lspsaga.nvim", after = "trouble.nvim", config = function() require("nvcode.lspsaga") end }
-	use { "mfussenegger/nvim-dap", event = { "BufRead", "BufNewFile" } }
-	use { "rcarriga/nvim-dap-ui", after = "nvim-dap", config = function() require("nvcode.dap") end }
+	--[[ use { "jose-elias-alvarez/null-ls.nvim", after = "nvim-lspconfig" } ]]
+	use { "b0o/SchemaStore.nvim", after = "nvim-lspconfig", config = function() require("nvcode.lsp") end }
+	--[[ use { "folke/trouble.nvim", after = "SchemaStore.nvim", config = function() require("nvcode.trouble") end } ]]
+	--[[ use { "glepnir/lspsaga.nvim", after = "trouble.nvim", config = function() require("nvcode.lspsaga") end } ]]
+	--[[ use { "mfussenegger/nvim-dap", event = { "BufRead", "BufNewFile" } } ]]
+	--[[ use { "rcarriga/nvim-dap-ui", after = "nvim-dap", config = function() require("nvcode.dap") end } ]]
 	use { "lukas-reineke/indent-blankline.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.indentblankline") end }
 	use { "lewis6991/gitsigns.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.gitsigns") end }
 	use { "nvim-neorg/neorg", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.neorg") end }
 	use { "numToStr/Comment.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.comment") end }
-	use { "folke/twilight.nvim", after = "zen-mode.nvim", config = function() require("nvcode.zen") end }
-	use { "folke/zen-mode.nvim", event = { "BufRead", "BufNewFile" } }
-	use { "ggandor/leap.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.leap") end }
-	use { "hrsh7th/cmp-calc", event = { "BufRead", "BufNewFile" } }
-	use { "hrsh7th/cmp-nvim-lsp", after = "cmp-calc" }
-	use { "saadparwaiz1/cmp_luasnip", after = "cmp-calc" }
-	use { "L3MON4D3/LuaSnip", after = "cmp-calc" }
-	use { "rafamadriz/friendly-snippets", after = "LuaSnip", config = function() require("nvcode.cmp.lazy") end }
+	--[[ use { "folke/twilight.nvim", after = "zen-mode.nvim", config = function() require("nvcode.zen") end } ]]
+	--[[ use { "folke/zen-mode.nvim", event = { "BufRead", "BufNewFile" } } ]]
+	use { "ggandor/leap.nvim", event = { "BufRead", "BufNewFile" } }
+	use { "ggandor/leap-spooky.nvim", after = "leap.nvim", config = function() require("nvcode.leap") end }
+	use { "windwp/nvim-autopairs", event = "InsertEnter", config = function() require("nvcode.autopairs") end }
 	use { "folke/todo-comments.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.todo") end }
+	--[[ use { "hrsh7th/cmp-calc", event = { "BufRead", "BufNewFile" } } ]]
+	use { "hrsh7th/cmp-nvim-lsp", event = { "BufRead", "BufNewFile" } }
+	use { "saadparwaiz1/cmp_luasnip", after = "cmp-nvim-lsp" }
+	use { "L3MON4D3/LuaSnip", after = "cmp-nvim-lsp" }
+	use { "rafamadriz/friendly-snippets", after = "LuaSnip", config = function() require("nvcode.cmp.lazy") end }
 
 	-- Non-NixOS Exclusive
 	use { "williamboman/mason.nvim" }

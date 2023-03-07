@@ -10,19 +10,28 @@ configs.setup {
 		"c",
 		"cpp",
 		"css",
+		"dockerfile",
+		"gitignore",
+		"graphql",
+		--[[ "haskell", ]]
 		"html",
 		"javascript",
 		"json",
 		"latex",
 		"lua",
+		"markdown",
+		--[[ "markdown-inline", ]]
 		"nix",
 		"norg",
 		"python",
 		"regex",
 		"rust",
+		"scss",
 		"svelte",
+		"toml",
 		"typescript",
-		"vim"
+		"vim",
+		"yuck"
 	},
 	autopairs = {
 		enable = true,
@@ -40,43 +49,5 @@ configs.setup {
 	context_commentstring = {
 		enable = true,
 		enable_autocme = false,
-	},
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner"
-			},
-			selection_modes = {
-				["@parameter.outer"] = "v",
-				["@function.outer"] = "v",
-				["@class.outer"] = "v"
-			},
-			invlude_surrounding_whitespace = true
-		},
-		move = {
-			enable = true,
-			set_jumps = true,
-			goto_next_start = {
-				["]m"] = "@function.outer",
-				["]]"] = "@class.outer"
-			},
-			goto_next_end = {
-				["]M"] = "@function.outer",
-				["]["] = "@class.outer"
-			},
-			goto_previous_start = {
-				["[m"] = "@function.outer",
-				["[["] = "@class.outer"
-			},
-			goto_previous_end = {
-				["[M"] = "@function.outer",
-				["[]"] = "@class.outer"
-			}
-		}
 	}
 }

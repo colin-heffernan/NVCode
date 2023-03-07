@@ -22,7 +22,7 @@ vim.o.wrap = false					-- Don't break lines
 vim.o.writebackup = false				-- No backup before overwriting file
 
 -- For Neovide
-vim.o.guifont = "Iosevka:h12"				-- Set GUI font
+--[[ vim.o.guifont = "Iosevka:h12" ]]				-- Set GUI font
 
 -- Run
---vim.cmd('au VimEnter * exec "NvimTreeToggle"')		-- Run NvimTree on startup
+--[[ vim.cmd('au VimEnter * exec "NvimTreeToggle"') ]]		-- Run NvimTree on startup
