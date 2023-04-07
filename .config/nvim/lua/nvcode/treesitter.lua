@@ -13,14 +13,15 @@ configs.setup {
 		"dockerfile",
 		"gitignore",
 		"graphql",
-		--[[ "haskell", ]]
+		"haskell",
 		"html",
 		"javascript",
 		"json",
 		"latex",
 		"lua",
+		"make",
 		"markdown",
-		--[[ "markdown-inline", ]]
+		"markdown_inline",
 		"nix",
 		"norg",
 		"python",

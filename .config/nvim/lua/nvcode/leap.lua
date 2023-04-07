@@ -31,12 +31,12 @@ end
 leap_spooky.setup {
 	affixes = {
 		remote = {
-			window = "R",
-			cross_window = "r"
+			window = "r",
+			cross_window = "R"
 		},
 		magnetic = {
-			window = "M",
-			cross_window = "m"
+			window = "m",
+			cross_window = "M"
 		}
 	}
 }

@@ -1,104 +1,292 @@
-local fn = vim.fn
-
--- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-	PACKER_BOOTSTRAP = fn.system {
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	}
-	print "Installing packer close and reopen Neovim..."
-	vim.cmd [[packadd packer.nvim]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
-	augroup packer_user_config
-		autocmd!
-		autocmd BufWritePost plugins.lua source <afile> | PackerSync
-	augroup end
-]]
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-	return
-end
-
--- Have packer use a popup window
-packer.init {
-	display = {
-		open_fn = function()
-			return require("packer.util").float { border = "rounded" }
-		end,
+require("lazy").setup({
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("nvcode.colorscheme")
+		end
 	},
-}
-
--- Install your plugins here
-return packer.startup(function(use)
-	-- Start
-	use { "wbthomason/packer.nvim" }
-	--[[ use { "lewis6991/impatient.nvim" } ]]
-	use { "nvim-lua/plenary.nvim" }
-	use { "MunifTanjim/nui.nvim" }
-	use { "nvim-lua/popup.nvim" }
-	use { "rcarriga/nvim-notify" }
-	--[[ use { "anuvyklack/hydra.nvim" } ]]
-	use { "kyazdani42/nvim-web-devicons" }
-	use { "folke/tokyonight.nvim" }
-	use { "nvim-lualine/lualine.nvim" }
-	use { "akinsho/bufferline.nvim" }
-	--[[ use { "noib3/nvim-cokeline" } ]]
-	use { "goolord/alpha-nvim" }
-	use { "nvim-neo-tree/neo-tree.nvim", branch = "v2.x" }
-	use { "nvim-telescope/telescope.nvim" }
-	--[[ use { "ahmedkhalf/project.nvim" } ]]
-	use { "nvim-treesitter/nvim-treesitter" }
-	--[[ use { "nvim-treesitter/nvim-treesitter-textobjects" } ]]
-	use { "windwp/nvim-ts-autotag" }
-	use { "JoosepAlviste/nvim-ts-context-commentstring" }
-	use { "uga-rosa/ccc.nvim" }
-	use { "akinsho/toggleterm.nvim" }
-	use { "hrsh7th/nvim-cmp" }
-	use { "hrsh7th/cmp-path" }
-	use { "hrsh7th/cmp-buffer" }
-	use { "hrsh7th/cmp-cmdline" }
-	use { "folke/noice.nvim" }
-
-	-- Opt
-	use { "neovim/nvim-lspconfig", event = { "BufRead", "BufNewFile" } }
-	--[[ use { "jose-elias-alvarez/null-ls.nvim", after = "nvim-lspconfig" } ]]
-	use { "b0o/SchemaStore.nvim", after = "nvim-lspconfig", config = function() require("nvcode.lsp") end }
-	--[[ use { "folke/trouble.nvim", after = "SchemaStore.nvim", config = function() require("nvcode.trouble") end } ]]
-	--[[ use { "glepnir/lspsaga.nvim", after = "trouble.nvim", config = function() require("nvcode.lspsaga") end } ]]
-	--[[ use { "mfussenegger/nvim-dap", event = { "BufRead", "BufNewFile" } } ]]
-	--[[ use { "rcarriga/nvim-dap-ui", after = "nvim-dap", config = function() require("nvcode.dap") end } ]]
-	use { "lukas-reineke/indent-blankline.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.indentblankline") end }
-	use { "lewis6991/gitsigns.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.gitsigns") end }
-	use { "nvim-neorg/neorg", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.neorg") end }
-	use { "numToStr/Comment.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.comment") end }
-	--[[ use { "folke/twilight.nvim", after = "zen-mode.nvim", config = function() require("nvcode.zen") end } ]]
-	--[[ use { "folke/zen-mode.nvim", event = { "BufRead", "BufNewFile" } } ]]
-	use { "ggandor/leap.nvim", event = { "BufRead", "BufNewFile" } }
-	use { "ggandor/leap-spooky.nvim", after = "leap.nvim", config = function() require("nvcode.leap") end }
-	use { "windwp/nvim-autopairs", event = "InsertEnter", config = function() require("nvcode.autopairs") end }
-	use { "folke/todo-comments.nvim", event = { "BufRead", "BufNewFile" }, config = function() require("nvcode.todo") end }
-	--[[ use { "hrsh7th/cmp-calc", event = { "BufRead", "BufNewFile" } } ]]
-	use { "hrsh7th/cmp-nvim-lsp", event = { "BufRead", "BufNewFile" } }
-	use { "saadparwaiz1/cmp_luasnip", after = "cmp-nvim-lsp" }
-	use { "L3MON4D3/LuaSnip", after = "cmp-nvim-lsp" }
-	use { "rafamadriz/friendly-snippets", after = "LuaSnip", config = function() require("nvcode.cmp.lazy") end }
-
-	-- Non-NixOS Exclusive
-	use { "williamboman/mason.nvim" }
-
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
-	if PACKER_BOOTSTRAP then
-		require("packer").sync()
-	end
-end)
+	{
+		"nvim-lua/plenary.nvim",
+		lazy = true
+	},
+	{
+		"MunifTanjim/nui.nvim",
+		lazy = true
+	},
+	{
+		"nvim-lua/popup.nvim",
+		lazy = true,
+		dependencies = {
+			"nvim-lua/plenary.nvim"
+		}
+	},
+	{
+		"rcarriga/nvim-notify",
+		lazy = false,
+		config = function()
+			require("nvcode.notify")
+		end
+	},
+	{
+		"nvim-tree/nvim-web-devicons",
+		lazy = true
+	},
+	{
+		"rebelot/heirline.nvim",
+		lazy = false,
+		config = function()
+			require("nvcode.heirline")
+		end
+	},
+	{
+		"goolord/alpha-nvim",
+		lazy = false,
+		dependencies = {
+			"nvim-tree/nvim-web-devicons"
+		},
+		config = function()
+			require("nvcode.alpha")
+		end
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		lazy = true,
+		cmd = "Neotree",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"nvim-tree/nvim-web-devicons"
+		},
+		config = function()
+			require("nvcode.neotree")
+		end
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		lazy = true
+	},
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		lazy = true
+	},
+	{
+		"nvim-treesitter/nvim-treesitter",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		dependencies = {
+			"windwp/nvim-ts-autotag",
+			"JoosepAlviste/nvim-ts-context-commentstring"
+		},
+		config = function()
+			require("nvcode.treesitter")
+		end
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		config = function()
+			require("nvcode.indentblankline")
+		end
+	},
+	{
+		"folke/todo-comments.nvim",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		config = function()
+			require("nvcode.todo")
+		end
+	},
+	{
+		"nvim-telescope/telescope.nvim",
+		lazy = true,
+		cmd = "Telescope",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"rcarriga/nvim-notify",
+			"nvim-treesitter/nvim-treesitter",
+			"lukas-reineke/indent-blankline.nvim",
+			"folke/todo-comments.nvim"
+		},
+		config = function()
+			require("nvcode.telescope")
+		end
+	},
+	{
+		"uga-rosa/ccc.nvim",
+		lazy = false,
+		config = function()
+			require("nvcode.ccc")
+		end
+	},
+	{
+		"akinsho/toggleterm.nvim",
+		lazy = true,
+		cmd = "ToggleTerm",
+		config = function()
+			require("nvcode.toggleterm")
+		end
+	},
+	{
+		"hrsh7th/cmp-path",
+		lazy = true
+	},
+	{
+		"hrsh7th/cmp-buffer",
+		lazy = true
+	},
+	{
+		"hrsh7th/cmp-cmdline",
+		lazy = true
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		lazy = true,
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-cmdline"
+		},
+		config = function()
+			require("nvcode.cmp.auto")
+		end
+	},
+	{
+		"folke/noice.nvim",
+		lazy = false,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+			"nvim-treesitter/nvim-treesitter",
+			"hrsh7th/nvim-cmp"
+		},
+		config = function()
+			require("nvcode.noice")
+		end
+	},
+	{
+		"b0o/SchemaStore.nvim",
+		lazy = true
+	},
+	{
+		"neovim/nvim-lspconfig",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		dependencies = {
+			"b0o/SchemaStore.nvim"
+		},
+		config = function()
+			require("nvcode.lsp")
+		end
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		config = function()
+			require("nvcode.gitsigns")
+		end
+	},
+	{
+		"numToStr/Comment.nvim",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		config = function()
+			require("nvcode.comment")
+		end
+	},
+	{
+		"ggandor/leap-spooky.nvim",
+		lazy = true
+	},
+	{
+		"ggandor/leap.nvim",
+		lazy = true,
+		event = {
+			"BufRead",
+			"BufNewFile"
+		},
+		dependencies = {
+			"ggandor/leap-spooky.nvim"
+		},
+		config = function()
+			require("nvcode.leap")
+		end
+	},
+	{
+		"windwp/nvim-autopairs",
+		lazy = true,
+		event = "InsertEnter",
+		config = function()
+			require("nvcode.autopairs")
+		end
+	},
+	{
+		"hrsh7th/cmp-nvim-lsp",
+		lazy = true
+	},
+	{
+		"saadparwaiz1/cmp_luasnip",
+		lazy = true
+	},
+	{
+		"rafamadriz/friendly-snippets",
+		lazy = true
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		lazy = true,
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets"
+		},
+		config = function()
+			require("nvcode.cmp.lazy")
+		end
+	},
+	{
+		"williamboman/mason.nvim",
+		lazy = true,
+		cmd = "Mason",
+		config = function()
+			require("nvcode.mason")
+		end
+	}
+})

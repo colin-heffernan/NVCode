@@ -8,6 +8,7 @@ local conds = require "nvim-autopairs.conds"
 
 npairs.setup {
 	check_ts = true,
+	disable_filetype = { "TelescopePrompt" }
 }
 
 npairs.add_rules {
@@ -22,4 +23,4 @@ local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
 	return
 end
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done {})
+cmp.event:on("confirm_cone", cmp_autopairs.on_confirm_done {})

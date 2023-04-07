@@ -14,25 +14,25 @@ keymap("n", "<C-Left>", "<C-w>h", opts)
 keymap("n", "<C-Right>", "<C-w>l", opts)
 
 -- Buffer navigation
-keymap("n", "<S-Left>", ":BufferLineCyclePrev<CR>", opts)
-keymap("n", "<S-Right>", ":BufferLineCycleNext<CR>", opts)
+--[[ keymap("n", "<S-Left>", ":BufferLineCyclePrev<CR>", opts)
+keymap("n", "<S-Right>", ":BufferLineCycleNext<CR>", opts) ]]
+keymap("n", "<Space>k", ":BufferLinePickClose<CR>", opts)
 
 -- Splits
---[[ keymap("n", "<Space>sv", "<C-w>v", opts)
-keymap("n", "<Space>sh", "<C-w>s", opts) ]]
+keymap("n", "<Space>v", "<C-w>v", opts)
+keymap("n", "<Space>h", "<C-w>s", opts)
 
 -- Toggle NeoTree
 keymap("n", "<Space>e", ":Neotree toggle<CR>", opts)
+
 
 -- Toggle Terminals
 keymap("n", "<C-Esc>", ":ToggleTerm direction=float<CR>", opts)
 keymap("t", "<C-Esc>", "<C-\\><C-n>:ToggleTerm<CR>", opts)
 
--- Search files
+-- Search
 keymap("n", "<Space>f", ":Telescope find_files hidden=true<CR>", opts)
 keymap("n", "<Space>o", ":Telescope oldfiles<CR>", opts)
---[[ keymap("n", "<Space>fg", ":Telescope live_grep<CR>", opts)
-keymap("n", "<Space>fp", ":Telescope projects<CR>", opts) ]]
 
 -- Visual
 -- Indents

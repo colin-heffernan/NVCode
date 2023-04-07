@@ -1,17 +1,3 @@
-vim.api.nvim_exec(
-	[[
-		packadd friendly-snippets
-		" packadd cmp-calc
-		" runtime after/plugin/cmp_calc.lua
-		packadd cmp-nvim-lsp
-		runtime after/plugin/cmp_nvim_lsp.lua
-		packadd luasnip
-		packadd cmp_luasnip
-		runtime after/plugin/cmp_luasnip.lua
-	]],
-	true
-)
-
 local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
 	vim.notify "CMP not found."
@@ -89,7 +75,7 @@ cmp.setup {
 			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 			vim_item.menu = ({
 				nvim_lsp = "[LSP]",
-				neorg = "[Neorg]",
+				--[[ neorg = "[Neorg]", ]]
 				--[[ luasnip = "[Snippet]", ]]
 				--[[ buffer = "[Buffer]", ]]
 				path = "[Path]",
@@ -100,7 +86,7 @@ cmp.setup {
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "neorg" },
+		--[[ { name = "neorg" }, ]]
 		--[[ { name = "luasnip" }, ]]
 		--[[ { name = "buffer" }, ]]
 		{ name = "path" },
@@ -112,7 +98,8 @@ cmp.setup {
 	},
 	window = {
 		documentation = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			--[[ border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, ]]
+			border = { " ", " ", " ", " ", " ", " ", " ", " " },
 		},
 	},
 	experimental = {
